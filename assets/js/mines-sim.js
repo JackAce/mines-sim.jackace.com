@@ -7,6 +7,56 @@ function calculatePermutations(n, r) {
     return result;
 }
 
+function calculateWinPercentage(mines, picks) {
+    const returnValue = calculatePermutations(25 - mines, picks) / calculatePermutations(25, picks);
+    return returnValue;
+}
+
+function calculateHitPayout(winPercentage) {
+    const returnValue = 0.99 / winPercentage;
+    return returnValue;
+}
+
+function getImageSrc(imageType, number) {
+    if (number > 25 || number < 1) {
+        number = 0;
+    }
+    let imageNumber = ("00" + number).slice(-2);
+
+    switch (imageType) {
+        case "mines":
+            break;
+        case "picks":
+            break;
+        default:
+            imageType = "blanks";
+            break;
+    }
+
+    let returnValue = `/assets/img/${imageType}/${imageType}-${imageNumber}.png`;
+    return returnValue;
+}
+
+function updateMines(mines) {
+    let minesImgSrc = getImageSrc('mines', mines);
+    document.querySelector(".mines-layout-img-mines").src = minesImgSrc;
+    document.querySelector(".mines-layout-img-mines").classList.remove("not-visible");
+    updateBlanks(mines);
+}
+
+function updateBlanks(mines) {
+    let blanks = 25 - mines;
+    let blanksImgSrc = getImageSrc('blanks', blanks);
+    document.querySelector(".mines-layout-img-blanks").src = blanksImgSrc;
+    document.querySelector(".mines-layout-img-blanks").classList.remove("not-visible");
+}
+
+function updatePicks(picks) {
+    let picksImgSrc = getImageSrc('picks', picks);
+    document.querySelector(".mines-layout-img-picks").src = picksImgSrc;
+    document.querySelector(".mines-layout-img-picks").classList.remove("not-visible");
+}
+
 function validateInputs(params) {
     let valid = true;
     document.querySelectorAll("label.error").forEach(label => label.classList.remove("error"));
@@ -59,7 +109,13 @@ function validateInputs(params) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Document is fully loaded and parsed!");
+    document.getElementById('mines').addEventListener('input', (event) => {
+        updateMines(event.target.value);
+    });
+    
+    document.getElementById('picks').addEventListener('input', (event) => {
+        updatePicks(event.target.value);
+    });
     
     document.getElementById('simulateButton').addEventListener('click', () => {
         const form = document.getElementById('gamblingForm');
@@ -81,8 +137,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
     
-        const winPercentage = calculatePermutations(25 - params.mines, params.picks) / calculatePermutations(25, params.picks);
-        const hitPayout = 0.99 / winPercentage;
+        const winPercentage = calculateWinPercentage( params.mines, params.picks);
+        const hitPayout = calculateHitPayout(winPercentage);
     
         let successes = 0;
         let failures = 0;
@@ -129,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <table>
                 <tr><th>Successes</th><td>${successes.toLocaleString()}</td></tr>
                 <tr><th>Failures</th><td>${failures.toLocaleString()}</td></tr>
+                <tr><th>Hit Payout</th><td>${hitPayout.toFixed(2)}x</td></tr>
                 <tr><th>Success Percentage</th><td>${successPercentage}%</td></tr>
                 <tr><th>Total Wagered</th><td>${totalWageredFormatted}</td></tr>
                 <tr><th>Total Win/Loss</th><td style="${winLossStyle}">${totalWinLossFormatted}</td></tr>
