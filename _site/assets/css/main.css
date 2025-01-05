@@ -1,12 +1,61 @@
 body {
-    font-family: Arial;
-    color: #fff;
-    background-color: #333;
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #13212d;
 }
-a {
-    color: #fff;
-    text-decoration: none;
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
 }
-a:hover {
-    text-decoration: underline;
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input.error {
+    border-color: red;
+}
+label.error {
+    color: red;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.form-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.result-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.result-container table {
+    margin-top: 20px;
+}
+.error-message {
+    color: red;
+    font-size: 0.9em;
 }
