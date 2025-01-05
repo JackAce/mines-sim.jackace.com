@@ -26,7 +26,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://rba.jackace.com"
 twitter_username: jackace
 github_username:  jackace
-google_analytics: G-D6BLYMY10E
+google_analytics: G-NZ77KCQ6EG
 google_adsense: ca-pub-5831288475713424
 
 port: 4025
