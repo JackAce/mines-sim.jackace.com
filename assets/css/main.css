@@ -39,6 +39,11 @@ input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+#hit-multiplier {
+    color: #0c0;
+    font-size: 24px;
+    font-weight: bold;
+}
 
 .form-container {
     background-color: #ffffff;
@@ -92,6 +97,11 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .mines-layout-img-picks {
     z-index: 90;
+}
+.hit-multiplier-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 .error-message {
     color: red;
