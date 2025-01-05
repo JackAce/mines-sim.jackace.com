@@ -49,12 +49,46 @@ function updateBlanks(mines) {
     let blanksImgSrc = getImageSrc('blanks', blanks);
     document.querySelector(".mines-layout-img-blanks").src = blanksImgSrc;
     document.querySelector(".mines-layout-img-blanks").classList.remove("not-visible");
+    updateHitMultiplier();
 }
 
 function updatePicks(picks) {
     let picksImgSrc = getImageSrc('picks', picks);
     document.querySelector(".mines-layout-img-picks").src = picksImgSrc;
     document.querySelector(".mines-layout-img-picks").classList.remove("not-visible");
+    updateHitMultiplier();
+}
+
+function getParams() {
+    const form = document.getElementById('gamblingForm');
+    const formData = new FormData(form);
+
+    const returnValue = {
+        mines: parseInt(formData.get('mines'), 10),
+        picks: parseInt(formData.get('picks'), 10),
+        startingBalance: parseFloat(formData.get('startingBalance')),
+        winningThreshold: parseFloat(formData.get('winningThreshold')),
+        startingWager: parseFloat(formData.get('startingWager')),
+        lossIncreasePercent: parseFloat(formData.get('lossIncreasePercent')),
+        winIncreasePercent: parseFloat(formData.get('winIncreasePercent')),
+        simulationCount: parseInt(formData.get('simulationCount').replace(/,/g, ''), 10)
+    };
+
+    return returnValue;
+}
+
+function updateHitMultiplier() {
+    const params = getParams();
+
+    if (params.mines + params.picks > 25) {
+        document.getElementById('hit-multiplier').innerHTML = "(Invalid Combo)";
+        return;
+    }
+
+    const winPercentage = calculateWinPercentage(params.mines, params.picks);
+    const hitPayout = calculateHitPayout(winPercentage).toFixed(2);
+
+    document.getElementById('hit-multiplier').innerHTML = `${hitPayout}x`;
 }
 
 function validateInputs(params) {
@@ -118,26 +152,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     document.getElementById('simulateButton').addEventListener('click', () => {
-        const form = document.getElementById('gamblingForm');
-        const formData = new FormData(form);
-    
-        const params = {
-            mines: parseInt(formData.get('mines'), 10),
-            picks: parseInt(formData.get('picks'), 10),
-            startingBalance: parseFloat(formData.get('startingBalance')),
-            winningThreshold: parseFloat(formData.get('winningThreshold')),
-            startingWager: parseFloat(formData.get('startingWager')),
-            lossIncreasePercent: parseFloat(formData.get('lossIncreasePercent')),
-            winIncreasePercent: parseFloat(formData.get('winIncreasePercent')),
-            simulationCount: parseInt(formData.get('simulationCount').replace(/,/g, ''), 10)
-        };
+        const params = getParams();
     
         if (!validateInputs(params)) {
             alert("Please fix errors in the form before proceeding.");
             return;
         }
     
-        const winPercentage = calculateWinPercentage( params.mines, params.picks);
+        const winPercentage = calculateWinPercentage(params.mines, params.picks);
         const hitPayout = calculateHitPayout(winPercentage);
     
         let successes = 0;
@@ -185,7 +207,6 @@ document.addEventListener("DOMContentLoaded", () => {
             <table>
                 <tr><th>Successes</th><td>${successes.toLocaleString()}</td></tr>
                 <tr><th>Failures</th><td>${failures.toLocaleString()}</td></tr>
-                <tr><th>Hit Payout</th><td>${hitPayout.toFixed(2)}x</td></tr>
                 <tr><th>Success Percentage</th><td>${successPercentage}%</td></tr>
                 <tr><th>Total Wagered</th><td>${totalWageredFormatted}</td></tr>
                 <tr><th>Total Win/Loss</th><td style="${winLossStyle}">${totalWinLossFormatted}</td></tr>
@@ -193,6 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </table>
         `;
     });
-    
+
+    updateHitMultiplier();
 });
 
