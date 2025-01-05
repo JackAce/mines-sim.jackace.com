@@ -17,6 +17,46 @@ function calculateHitPayout(winPercentage) {
     return returnValue;
 }
 
+function getImageSrc(imageType, number) {
+    if (number > 25 || number < 1) {
+        number = 0;
+    }
+    let imageNumber = ("00" + number).slice(-2);
+
+    switch (imageType) {
+        case "mines":
+            break;
+        case "picks":
+            break;
+        default:
+            imageType = "blanks";
+            break;
+    }
+
+    let returnValue = `/assets/img/${imageType}/${imageType}-${imageNumber}.png`;
+    return returnValue;
+}
+
+function updateMines(mines) {
+    let minesImgSrc = getImageSrc('mines', mines);
+    document.querySelector(".mines-layout-img-mines").src = minesImgSrc;
+    document.querySelector(".mines-layout-img-mines").classList.remove("not-visible");
+    updateBlanks(mines);
+}
+
+function updateBlanks(mines) {
+    let blanks = 25 - mines;
+    let blanksImgSrc = getImageSrc('blanks', blanks);
+    document.querySelector(".mines-layout-img-blanks").src = blanksImgSrc;
+    document.querySelector(".mines-layout-img-blanks").classList.remove("not-visible");
+}
+
+function updatePicks(picks) {
+    let picksImgSrc = getImageSrc('picks', picks);
+    document.querySelector(".mines-layout-img-picks").src = picksImgSrc;
+    document.querySelector(".mines-layout-img-picks").classList.remove("not-visible");
+}
+
 function validateInputs(params) {
     let valid = true;
     document.querySelectorAll("label.error").forEach(label => label.classList.remove("error"));
@@ -69,7 +109,13 @@ function validateInputs(params) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Document is fully loaded and parsed!");
+    document.getElementById('mines').addEventListener('input', (event) => {
+        updateMines(event.target.value);
+    });
+    
+    document.getElementById('picks').addEventListener('input', (event) => {
+        updatePicks(event.target.value);
+    });
     
     document.getElementById('simulateButton').addEventListener('click', () => {
         const form = document.getElementById('gamblingForm');

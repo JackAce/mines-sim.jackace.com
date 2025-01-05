@@ -39,8 +39,14 @@ input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
 .form-container {
     background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.mines-layout-container {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -55,7 +61,42 @@ input[type="number"]::-webkit-outer-spin-button {
 .result-container table {
     margin-top: 20px;
 }
+
+/* .mines-layout-img {
+} */
+.mines-layout-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.mines-image-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+.mines-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 200px;
+}
+.mines-layout-img-bg {
+    z-index: 0;
+}
+.mines-layout-img-mines {
+    z-index: 10;
+}
+.mines-layout-img-blanks {
+    z-index: 50;
+}
+.mines-layout-img-picks {
+    z-index: 90;
+}
 .error-message {
     color: red;
     font-size: 0.9em;
+}
+.not-visible {
+    display: none;
 }
