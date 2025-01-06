@@ -81,14 +81,18 @@ function updateHitMultiplier() {
     const params = getParams();
 
     if (params.mines + params.picks > 25) {
-        document.getElementById('hit-multiplier').innerHTML = "(Invalid Combo)";
+        document.getElementById('hit-multiplier').innerHTML = "";
+        document.getElementById('hit-percentage').innerHTML = "(invalid combo)";
         return;
     }
 
     const winPercentage = calculateWinPercentage(params.mines, params.picks);
-    const hitPayout = calculateHitPayout(winPercentage).toFixed(2);
+    const hitPayout = calculateHitPayout(winPercentage).toLocaleString(undefined, { style: "decimal", maximumFractionDigits: 2});
+
+    const winPercentageText = (winPercentage * 100).toFixed(2) + "%";
 
     document.getElementById('hit-multiplier').innerHTML = `${hitPayout}x`;
+    document.getElementById('hit-percentage').innerHTML = `(probability: ${winPercentageText})`;
 }
 
 function validateInputs(params) {

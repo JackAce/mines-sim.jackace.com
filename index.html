@@ -89,16 +89,16 @@ title: Mines Simulator - JackAce.com
             <!-- <input type="number" id="picks" name="picks" min="1" max="24" required> -->
 
             <label id="label-startingBalance" for="startingBalance">Starting Balance:</label>
-            <input type="number" id="startingBalance" name="startingBalance" min="10" max="10000" step="0.01" required>
+            <input type="number" id="startingBalance" name="startingBalance" min="10" max="10000" value="1000" step="0.01" required>
 
             <label id="label-winningThreshold" for="winningThreshold">Winning Threshold:</label>
-            <input type="number" id="winningThreshold" name="winningThreshold" min="10" max="100000" step="0.01" required>
+            <input type="number" id="winningThreshold" name="winningThreshold" min="10" max="100000" step="0.01" value="1000" required>
 
             <label id="label-startingWager" for="startingWager">Starting Wager:</label>
-            <input type="number" id="startingWager" name="startingWager" min="0.2" max="1000" step="0.01" required>
+            <input type="number" id="startingWager" name="startingWager" min="0.2" max="1000" step="0.01" value="1" required>
 
             <label id="label-lossIncreasePercent" for="lossIncreasePercent">Loss Increase Percent:</label>
-            <input type="number" id="lossIncreasePercent" name="lossIncreasePercent" min="0" max="10000" step="0.01" required>
+            <input type="number" id="lossIncreasePercent" name="lossIncreasePercent" min="0" max="10000" step="0.01" value="100" required>
 
             <label id="label-simulationCount" for="simulationCount">Number of Simulations:</label>
             <select id="simulationCount" name="simulationCount" required>
@@ -126,6 +126,10 @@ title: Mines Simulator - JackAce.com
 
     <div class="hit-multiplier-container">
         <div id="hit-multiplier">
+
+        </div>
+        &nbsp;&nbsp;
+        <div id="hit-percentage">
 
         </div>
     </div>
